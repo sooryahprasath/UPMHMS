@@ -5,6 +5,8 @@
 <h3 align="center">Universal Patient Medical History Management System</h3>
 
 <p align="center">
+
+This system aims to centralize patient medical records and server as a secure storage medium. 
  
 </p>
 
