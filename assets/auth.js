@@ -1,4 +1,16 @@
 (function(){
+
+  var uid = null;
+    firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      window.location.replace("profile.html");
+      uid = user.uid;
+    }else {
+      //redirect to login page
+      uid = null;
+    }
+  });
   // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
   var uiConfig = {

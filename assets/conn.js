@@ -12,4 +12,28 @@ var app_firebase = {};
   firebase.initializeApp(config);
 
   app_firebase = firebase;
+
+  function fnCreate(path, body, callBack) {
+    if(!path || !body) return;
+    app_firebase.database().ref(path).push(body, callBack);
+    console.log("pushed to fb");
+  }
+
+  function fnRead(path, sucessFunction, errorFunction){
+    if(!path || !sucessFunction || !errorFunction) return;
+    app_firebase.database().ref(path).once('value').then(sucessFunction, errorFunction);
+
+  }
+
+
+  app_firebase.databaseApi = {
+    create: fnCreate,
+    read: fnRead,
+    //update: fnUpdate,
+    //delete: fnDelete
+  }
+
+
+
+
 })()

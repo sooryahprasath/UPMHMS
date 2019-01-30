@@ -1,52 +1,176 @@
 <html lang="en">
    <head>
       <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Compiled and minified JavaScript -->
+      <script src="js/materialize.js"></script>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <meta name="description" content="">
       <meta name="author" content="">
       <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
-      <title>Profile WebApp</title>
+      <title>Universal Patient Medical History Management System - UMHS</title>
       <!-- Bootstrap core CSS -->
-      <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
    </head>
    <body>
       <!-- Navigation -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-         <div class="container">
-            <a class="navbar-brand" id="user_para" href="#">Welcome</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-               <ul class="navbar-nav ml-auto">
-                  <li class="nav-item active">
-                     <a class="nav-link" href="#">Home
-                     <span class="sr-only">(current)</span>
-                     </a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href=""></a>
-                  </li>
-                  <li class="nav-item">
-                     <button class="btn btn-primary" onclick="mainApp.logout()">Logout</button>
-                  </li>
-               </ul>
-            </div>
+      <nav class="nav-extended teal lighten-1">
+         <div class="nav-wrapper">
+            <a href="profile.html" class="brand-logo" style="margin-left:10px;font-size:18px;">Universal Patient Medical History Management System - UMHS</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+               <li><a onclick="hospitalToggle()">Medical Institutions</a></li>
+               <li><a onclick="patientToggle()">Patients</a></li>
+               <li><a class="waves-effect waves-light btn red lighten-1" onclick="mainApp.logout()">logout</a></li>
+            </ul>
+         </div>
+         <div class="nav-content teal lighten-2" id="Hospital" style="display:none">
+            <ul class="tabs tabs-transparent">
+               <li class="tab"><a onclick="createNewToggle()">Create New Medical Institution</a></li>
+               <li class="tab"><a onclick="manageExistToggle();mainApp.readInstitution();">Manage Existing Medical Institution</a></li>
+            </ul>
+         </div>
+         <div class="nav-content teal lighten-2" id="Patient" style="display:none">
+            <ul class="tabs tabs-transparent">
+               <li class="tab"><a onclick="viewPatientToggle()">View Patient Records</a></li>
+               <li class="tab"><a onclick="managePatientToggle()">Manage Patient Records</a></li>
+            </ul>
          </div>
       </nav>
       <!-- Page Content -->
       <div class="container">
-         <div class="row align-items-center">
-            <div class="col-lg-5 text-center">
+         <div class="row">
+            <!-- Create new Medical Institution -->
+            <div id="createNew" style="display:none; margin-top:10px;">
+               <div id="form" class="col s8">
+                  <div class="card-panel white">
+                    <label class="teal-text" for="inst_deatails">Institution Contact Details</label>
+                     <div class="row">
+                        <div class="input-field col s6">
+                           <input id="inst_name" type="text" class="validate">
+                           <label for="inst_nam">Institution Name</label>
+                        </div>
+                        <div class="input-field col s6">
+                           <input id="head_name" type="text" class="validate">
+                           <label for="head_name">Head of Institution Name</label>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="input-field col s6">
+                           <input id="contact_mail" type="text" class="validate">
+                           <label for="mail">Contact Email</label>
+                        </div>
+                        <div class="input-field col s6">
+                           <input id="contact_phno" type="text" class="validate">
+                           <label for="phno">Contact Phone Number</label>
+                        </div>
+                     </div>
+                     <label class="teal-text" for="address_BldgNo">Institution Address</label>
+                     <div class="row">
+                        <div class="input-field col s3">
+                           <input id="inst_addressBldgNo" type="text" class="validate">
+                           <label for="address_BldgNo">Building Number</label>
+                        </div>
+                        <div class="input-field col s9">
+                           <input id="inst_addressStrtNo" type="text" class="validate">
+                           <label for="address_StrtNm">Street Name</label>
+                        </div>
+                        <div class="input-field col s4">
+                           <input id="inst_addressLclty" type="text" class="validate">
+                           <label for="address_Lclty">Locality</label>
+                        </div>
+                        <div class="input-field col s5">
+                           <input id="inst_addressCity" type="text" class="validate">
+                           <label for="address_City">City</label>
+                        </div>
+                        <div class="input-field col s3">
+                           <input id="inst_addressPnCd" type="text" class="validate">
+                           <label for="address_Pin">Pin Code</label>
+                        </div>
+
+                     </div>
+                     <label class="teal-text" for="inst_accnt">Institution Account Creation</label>
+                     <div class="row">
+                        <div class="input-field col s6">
+                           <input id="inst_email" type="email" class="validate">
+                           <label for="inst_mail">Institution Email</label>
+                        </div>
+                        <div class="input-field col s6">
+                           <input id="inst_emailrntr" type="password" class="validate">
+                           <label for="inst_mailrnt">Re Enter Email</label>
+                        </div>
+                     </div>
+                     <div class="row">
+                       <div class="input-field col s6">
+                          <input id="inst_pass" type="password" class="validate">
+                          <label for="inst_pwd">Password</label>
+                       </div>
+                       <div class="input-field col s6">
+                          <input id="inst_passrntr" type="password" class="validate">
+                          <label for="inst_pwdrntr">Re Enter Password</label>
+                       </div>
+                     </div>
+
+                     <div class="row">
+                       <div class="input-field col s6">
+                          <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createInstitution()">Create New Institution
+                          <i class="material-icons right">send</i>
+                          </button>
+                       </div>
+                       <div class="input-field col s3">
+                          <button class="btn waves-effect waves-light yellow lighten-1" onclick="">Reset
+                          <i class="material-icons right">redo</i>
+                          </button>
+                       </div>
+                       <div class="input-field col s3">
+                          <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">Cancel
+                          <i class="material-icons right">cancel</i>
+                          </button>
+                       </div>
+                     </div>
+
+                  </div>
+               </div>
 
 
+               <div class="col s4">
+                  <div class="card-panel white">
+                    <h6>Placeholder text - Right Sidebar include Hospital list<h6>
+
+                  </div>
+
+               </div>
+               </div>
+             </div>
+           </div>
+
+            <!-- Manage Existing Medical Institution -->
+            <div id="manageExist1" style="display:none; margin-top:10px; margin-left:30px; margin-right:30px">
+               
+                  <div id="manageExist" class="card-panel white">
+                     <!---Auto Generated -->
+                  </div>
+               
+            </div>
+            <!-- View Patients -->
+            <div id="patientView" style="display:none; margin-top:10px;">
+               <a class="waves-effect waves-light btn">3</a>
+               <a class="waves-effect waves-light btn">3</a>
+               <a class="waves-effect waves-light btn">3</a>
+            </div>
+            <!-- Manage Patients -->
+            <div id="patientManage" style="display:none; margin-top:10px;">
+               <a class="waves-effect waves-light btn">4</a>
+               <a class="waves-effect waves-light btn">4</a>
+               <a class="waves-effect waves-light btn">4</a>
+            </div>
          </div>
       </div>
-       </div>
-       <script src="assets/conn.js"></script>
-       <script src="assets/profile.js"></script>
-
-
-
+      <script src="assets/conn.js"></script>
+      <script src="assets/profile.js"></script>
+        <script src="js/custom.js"></script>
    </body>
 </html>
