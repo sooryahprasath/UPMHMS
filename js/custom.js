@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 function hospitalToggle() {
 document.getElementById('Patient').style.display = "none";
+document.getElementById('dashCards').style.display = "none";
 document.getElementById('manageExists').style.display = "none";
 document.getElementById('createNew').style.display = "none";
 document.getElementById('patientView').style.display = "none";
@@ -17,6 +18,7 @@ document.getElementById('Hospital').style.display = "block";
 function patientToggle() {
 document.getElementById('Hospital').style.display = "none";
 document.getElementById('manageExists').style.display = "none";
+document.getElementById('dashCards').style.display = "none";
 document.getElementById('createNew').style.display = "none";
 document.getElementById('patientView').style.display = "none";
 document.getElementById('patientManage').style.display = "none";
