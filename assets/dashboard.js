@@ -209,5 +209,5 @@ mainApp.viewPatient = fnPRead;
 mainApp.updateInstitution = fnUpdate;
 mainApp.deleteInstitution = fnDelete;
 mainApp.logout = logout;
-
 })()
+

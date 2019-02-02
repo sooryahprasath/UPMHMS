@@ -1,3 +1,11 @@
+document.addEventListener("DOMContentLoaded", function(){
+	$('.preloader-background').delay(1700).fadeOut('slow');
+	
+	$('.preloader-wrapper')
+		.delay(1700)
+		.fadeOut();
+});
+
 function hospitalToggle() {
 document.getElementById('Patient').style.display = "none";
 document.getElementById('manageExists').style.display = "none";
