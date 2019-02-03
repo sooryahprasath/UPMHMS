@@ -48,7 +48,6 @@
             <ul class="tabs tabs-transparent">
                <li class="tab"><a onclick="createNewToggle()">Create New Medical Institution</a></li>
                <li class="tab"><a onclick="manageExistToggle();mainApp.viewInstitution();">Manage Existing Medical Institution</a></li>
-               <li class="tab"><a onclick="instAccToggle()">Create and Manage Institution Accounts</a></li>
             </ul>
          </div>
          <div class="nav-content teal lighten-2" id="Patient" style="display:none">
@@ -157,6 +156,27 @@
                               <label for="address_Pin">Pin Code</label>
                            </div>
                         </div>
+                        <label class="teal-text" for="inst_accnt">Institution Account Creation</label>
+                        <div class="row">
+                           <div class="input-field col s6">
+                              <input id="inst_email" type="email" class="validate">
+                              <label for="inst_mail">Institution Email</label>
+                           </div>
+                           <div class="input-field col s6">
+                              <input id="inst_emailrntr" type="password" class="validate">
+                              <label for="inst_mailrnt">Re Enter Email</label>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="input-field col s6">
+                              <input id="inst_pass" type="password" class="validate">
+                              <label for="inst_pwd">Password</label>
+                           </div>
+                           <div class="input-field col s6">
+                              <input id="inst_passrntr" type="password" class="validate">
+                              <label for="inst_pwdrntr">Re Enter Password</label>
+                           </div>
+                        </div>
                         <div class="row">
                            <div class="input-field col s6">
                               <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createInstitution();">Create New Institution
@@ -164,12 +184,12 @@
                               </button>
                            </div>
                            <div class="input-field col s3">
-                              <button class="btn waves-effect waves-light yellow lighten-1" type="reset" onclick="">Reset
+                              <button class="btn waves-effect waves-light yellow lighten-1" onclick="">Reset
                               <i class="material-icons right">redo</i>
                               </button>
                            </div>
                            <div class="input-field col s3">
-                              <button class="btn waves-effect waves-light red lighten-1" onclick="location.href='/dashboard.html'" name="action">Cancel
+                              <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">Cancel
                               <i class="material-icons right">cancel</i>
                               </button>
                            </div>
@@ -191,51 +211,6 @@
             <div id="manageExist" class="card-panel white">
                <!---Auto Generated -->
             </div>
-         </div>
-         <!-- Manage Institution Accounts-->
-         <div id="manageAcc" style="display:none; margin-top:10px; margin-left:30px; margin-right:30px">
-            <div id="form" class="col s8">
-            <div id="manageAccs" class="card-panel white">
-               <label class="teal-text" for="inst_accnt">Institution Account Creation</label>
-               <div class="row">
-                  <div class="input-field col s6">
-                     <input id="inst_email" type="email" class="validate">
-                     <label for="inst_mail">Institution Email</label>
-                  </div>
-                  <div class="input-field col s6">
-                     <input id="inst_emailrntr" type="email" class="validate">
-                     <label for="inst_mailrnt">Re Enter Email</label>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="input-field col s6">
-                     <input id="inst_pass" type="password" class="validate">
-                     <label for="inst_pwd">Password</label>
-                  </div>
-                  <div class="input-field col s6">
-                     <input id="inst_passrntr" type="password" class="validate">
-                     <label for="inst_pwdrntr">Re Enter Password</label>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="input-field col s3">
-                     <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createInstAcc();">Create Account
-                     <i class="material-icons right">send</i>
-                     </button>
-                  </div>
-                  <div class="input-field col s3">
-                     <button class="btn waves-effect waves-light yellow lighten-1" onclick="">Reset
-                     <i class="material-icons right">redo</i>
-                     </button>
-                  </div>
-                  <div class="input-field col s3">
-                     <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">Cancel
-                     <i class="material-icons right">cancel</i>
-                     </button>
-                  </div>
-               </div>
-            </div>
-         </div>
          </div>
          <!-- View Patients -->
          <div id="patientView" style="display:none; margin-top:10px;">

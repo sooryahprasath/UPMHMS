@@ -32,30 +32,8 @@ function messageHandler(err){
   }else {
       console.log("Sucess!");
       M.toast({html: 'Institution added Sucessfully' , classes: 'rounded'});
-      document.getElementById("inst_name").value = "";
-      document.getElementById("head_name").value = "";
-      document.getElementById("contact_mail").value = "";
-      document.getElementById("contact_phno").value = "";
-      document.getElementById("inst_addressBldgNo").value = "";
-      document.getElementById("inst_addressStrtNo").value = "";
-      document.getElementById("inst_addressLclty").value = "";
-      document.getElementById("inst_addressCity").value = "";
-      document.getElementById("inst_addressPnCd").value = "";
   }
 }
-
-function messageHandlerAcc(err){
-  if(!!err){
-      console.log(err);
-      M.toast({html: 'Account creation Unsucessful', classes: 'rounded'});
-
-  }else {
-      console.log("Sucess!");
-      M.toast({html: 'Account Created', classes: 'rounded'});
-  }
-}
-
-
 function fnHCreate() {
   var name = document.getElementById("inst_name");
   var owner = document.getElementById("head_name");
@@ -79,37 +57,9 @@ function fnHCreate() {
       inst_city: city.value,
       inst_pincode: pincode.value
   }
-  if(name.value == '' || owner.value == '' || email.value == '' || phone.value == '' || bldgno.value == '' || street.value == '' || locality.value == '' || city.value == '' || pincode.value == ''){
-    M.toast({html: 'Feilds cannot be empty, Please check and try again', classes: 'rounded'});
-  }else{
-    app_firebase.databaseApi.create(path, data, messageHandler);
-    console.log("Pushed to conn");
-  }
-}
+  app_firebase.databaseApi.create(path, data, messageHandler);
+  console.log("Pushed to conn");
 
-function fnAccCreate() {
-
-  var accEmail = document.getElementById("inst_email");
-  var accEmailre = document.getElementById("inst_emailrntr");
-  var accPass = document.getElementById("inst_pass");
-  var accPassre = document.getElementById("inst_passrntr");
-  var pathAcc = 'hospitalAccounts/';
-  var dataAcc = {
-    inst_accEmail: accEmail.value,
-    inst_accPass: accPass.value
-  }
-
-  if(accEmail.value == '' || accEmailre.value == '' || accPass.value == '' || accPassre.value == ''){
-    M.toast({html: 'Email or password feilds cannot be empty', classes: 'rounded'});
-    console.log("Pushed to conn UNAME AND PASS");
-
-  }else if(accEmail.value != accEmailre.value || accPass.value != accPassre.value){
-    M.toast({html: 'Email or password feilds do not match', classes: 'rounded'});
-
-  }else{
-    app_firebase.databaseApi.create(pathAcc, dataAcc, messageHandlerAcc);
-  }
- 
 }
 
 function fnPCreate() {
@@ -260,7 +210,7 @@ mainApp.createPatient = fnPCreate;
 mainApp.viewInstitution = fnHRead;
 mainApp.viewPatient = fnPRead;
 mainApp.updateInstitution = fnUpdate;
-mainApp.createInstAcc = fnAccCreate;
 mainApp.deleteInstitution = fnDelete;
 mainApp.logout = logout;
 })()
+

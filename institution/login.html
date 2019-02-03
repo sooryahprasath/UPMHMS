@@ -1,0 +1,45 @@
+<html>
+   <head>
+      <meta charset="utf-8">
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link type="text/css" rel="stylesheet" href="css/custom.css"  media="screen,projection"/>
+      <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+      <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+      <title>Universal Patient Medical History Management System - UMHS</title>
+      <!------ Include the above in your HEAD tag ---------->
+   </head>
+   <body>
+      <!-- loader -->
+      <div class="preloader-background">
+         <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+               <div class="circle-clipper left">
+                  <div class="circle"></div>
+               </div>
+               <div class="gap-patch">
+                  <div class="circle"></div>
+               </div>
+               <div class="circle-clipper right">
+                  <div class="circle"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- The surrounding HTML is left untouched by FirebaseUI.
+         Your app may use that space for branding, controls and other customizations.-->
+      <h6></h6>
+      <div id="firebaseui-auth-container"></div>
+      <div id="loader">Loading...</div>
+      <script src="assets/conn.js"></script>
+      <script src="assets/auth.js"></script>
+      <script src="js/custom.js"></script>
+   </body>
+   </body>
+</html>
