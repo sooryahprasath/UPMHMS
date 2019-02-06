@@ -56,3 +56,20 @@ function managePatientToggle() {
 document.getElementById('patientView').style.display = "none";
 document.getElementById('patientManage').style.display = "block";
 }
+
+function formReset(){
+	document.getElementById("inst_name").value = "";
+	document.getElementById("head_name").value = "";
+	document.getElementById("contact_mail").value = "";
+	document.getElementById("contact_phno").value = "";
+	document.getElementById("inst_addressBldgNo").value = "";
+	document.getElementById("inst_addressStrtNo").value = "";
+	document.getElementById("inst_addressLclty").value = "";
+	document.getElementById("inst_addressCity").value = "";
+	document.getElementById("inst_addressPnCd").value = "";
+	M.toast({html: 'Form reset' , classes: 'rounded'});
+}
+
+function formCancle(){
+	window.location.replace("dashboard.html");
+}

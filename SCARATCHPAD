@@ -1,9 +1,22 @@
-  document.getElementById("inst_name").value = "";
-  document.getElementById("head_name").value = "";
-  document.getElementById("contact_mail").value = "";
-  document.getElementById("contact_phno").value = "";
-  document.getElementById("inst_addressBldgNo").value = "";
-  document.getElementById("inst_addressStrtNo").value = "";
-  document.getElementById("inst_addressLclty").value = "";
-  document.getElementById("inst_addressCity").value = "";
-  document.getElementById("inst_addressPnCd").value = "";
+function fnAccCreate() {
+
+  var logEmail = document.getElementById("logHemail");
+  var logPass = document.getElementById("logHpass");
+  var pathAcc = 'hospitalAccounts/';
+  var dataAcc = {
+    inst_accEmail: accEmail.value,
+    inst_accPass: accPass.value
+  }
+
+  if(accEmail.value == '' || accEmailre.value == '' || accPass.value == '' || accPassre.value == ''){
+    M.toast({html: 'Email or password feilds cannot be empty', classes: 'rounded'});
+    console.log("Pushed to conn UNAME AND PASS");
+
+  }else if(accEmail.value != accEmailre.value || accPass.value != accPassre.value){
+    M.toast({html: 'Email or password feilds do not match', classes: 'rounded'});
+
+  }else{
+    app_firebase.databaseApi.create(pathAcc, dataAcc, messageHandlerAcc);
+  }
+ 
+}

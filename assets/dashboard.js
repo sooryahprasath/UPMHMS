@@ -170,7 +170,7 @@ function fnHRead() {
         var phone = inst_info[k].inst_phone;
         var locality = inst_info[k].inst_locality;
         var city = inst_info[k].inst_city;
-        var link;
+        var path = keys[i];
 
           html+="<tr>";
           html+="<td>"+name+"</td>";
@@ -179,9 +179,11 @@ function fnHRead() {
           html+="<td>"+email+"</td>";
           html+="<td>"+locality+"</td>";
           html+="<td>"+city+"</td>";
-          html+="<td><a href='"+link+"'>Edit</a></td>";
+          html+="<td><a class='waves-effect waves-light btn red' onclick='mainApp.deletePatient("+path+")'>Delete</a></td>";
           html+="</tr>";
-          console.log(name,ownerName,email,phone,locality,city);
+          //console.log(name,ownerName,email,phone,locality,city);
+          console.log(path);
+          
       }
       html+="</table>";
         document.getElementById("manageExist").innerHTML = html;
@@ -194,6 +196,47 @@ function fnHRead() {
   }   
 }
 
+function fnHDelete(path){
+    app_firebase.databaseApi.delete(path, messageHandler);
+
+}
+
+function fnHShow() {
+  var path = 'institutions/' + uid;
+  app_firebase.databaseApi.read(path, sucessFn, messageHandler)
+  function sucessFn(snapShot){
+    if(!!snapShot && !!snapShot.val()){
+      //console.log(snapShot.val());
+      var inst_info = snapShot.val();
+      var keys = Object.keys(inst_info);
+      console.log(keys);
+      var html = "<table class='centered' border='1|1'>";
+      html+= "<thead>";
+      html+= "<tr>";
+      html+= "<th>Institution Name</th>";
+      html+= "<th>City</th>";
+      html+= "</tr>";
+      html+= "</thead>";
+      
+      for (var i = 0;i < keys.length; i++){
+        var k = keys[i];
+        var name = inst_info[k].inst_name;
+        var city = inst_info[k].inst_city;
+
+          html+="<tr>";
+          html+="<td>"+name+"</td>";
+          html+="<td>"+city+"</td>";
+          html+="</tr>";
+      }
+      html+="</table>";
+        document.getElementById("viewHospitals").innerHTML = html;
+
+    }else{
+      M.toast({html: 'Institution list Empty', classes: 'rounded'});
+    }
+  }   
+}
+
 function fnPRead() {
   var path = 'patients/';
   app_firebase.databaseApi.read(path, sucessFn, messageHandler)
@@ -202,7 +245,6 @@ function fnPRead() {
       //console.log(snapShot.val());
       var pat_info = snapShot.val();
       var keys = Object.keys(pat_info);
-      console.log(keys);
       var html = "<table class='centered' border='1|1'>";
       html+= "<thead>";
       html+= "<tr>";
@@ -224,7 +266,6 @@ function fnPRead() {
         var phone = pat_info[k].pat_phone;
         var locality = pat_info[k].pat_locality;
         var city = pat_info[k].pat_city;
-        var link;
 
           html+="<tr>";
           html+="<td>"+name+"</td>";
@@ -233,9 +274,10 @@ function fnPRead() {
           html+="<td>"+email+"</td>";
           html+="<td>"+locality+"</td>";
           html+="<td>"+city+"</td>";
-          html+="<td><a href='"+link+"'>Edit</a></td>";
+          html+="<td>"+keys+"</td>";
           html+="</tr>";
           console.log(name,age,email,phone,locality,city);
+          console.log(keys);
       }
       html+="</table>";
         document.getElementById("viewPatient").innerHTML = html;
@@ -243,7 +285,7 @@ function fnPRead() {
 
     }else{
       console.log("No data la");
-      M.toast({html: 'Patient list Fetch Unsucessfull', classes: 'rounded'});
+      M.toast({html: 'Patient list Fetch Unsucessful', classes: 'rounded'});
     }
   }   
 }
@@ -257,8 +299,10 @@ function fnDelete() {
 
 mainApp.createInstitution = fnHCreate;
 mainApp.createPatient = fnPCreate;
+mainApp.deletePatient = fnHDelete;
 mainApp.viewInstitution = fnHRead;
 mainApp.viewPatient = fnPRead;
+mainApp.showHospital = fnHShow;
 mainApp.updateInstitution = fnUpdate;
 mainApp.createInstAcc = fnAccCreate;
 mainApp.deleteInstitution = fnDelete;
