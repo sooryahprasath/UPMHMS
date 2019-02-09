@@ -3,19 +3,7 @@ var mainApp = {};
 
   var firebase = app_firebase;
   var uid = null;
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    // User is signed in.
-    uid = user.uid;
-    uname = user.email;
-    M.toast({html: uname+' has logged in', classes: 'rounded'});
-  }else {
-    //redirect to login page
-    uid = null;
-    window.location.replace("login.html");
-  }
-});
-
+  
 function logout(){
   firebase.auth().signOut().then(function() {
     console.log('Signed Out');

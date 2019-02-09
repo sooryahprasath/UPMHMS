@@ -17,7 +17,9 @@
 }
 
 .container{
-    width: 100%;
+    width: 60%;
+    margin-top: 5%;
+    margin-left: 35%; 
     max-width:initial;
     > .row{
         margin: 0;

@@ -20,3 +20,63 @@ function fnAccCreate() {
   }
  
 }
+
+
+
+
+
+    app_firebase.auth().createUserWithEmailAndPassword(accEmail.value, accPass.value).catch(function(error) {
+      
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("Error Code "+errorCode);
+      console.log("Error Code "+errorMessage);
+    });
+
+
+
+
+  function accLogin() {
+
+    var hosp_accEmail = document.getElementById('hosp_email');
+    var hosp_accPass = document.getElementById('hosp_pass');
+    var path = 'hospitalAccounts/';
+    var dbIndex = 'inst_accEmail'
+
+    //grab email and this func is nested to check if the user first exists the nest to validate pwd
+    firebase.database().ref(path).orderByChild(dbIndex).equalTo(hosp_accEmail).once("value", snapshot => {
+      if (snapshot.exists()) {
+        var userData = snapshot.val();
+        var keys = Object.keys(userData);
+        console.log("exists!", userData);
+
+
+        for (var i = 0; i < keys.length; i++) {
+          var k = keys[i];
+          var dbEmail = userData[k].inst_accEmail;
+          var dbPwd = userData[k].inst_accPass;
+        }
+        if (hosp_accPass == dbPwd) {
+
+          console.log("Logged in");
+
+        } else {
+          console.log("Invalid Cridentials");
+
+        }
+
+      } else {
+        console.log("User dosn't Exist");
+
+      } 
+
+
+      
+      console.log(dbEmail, dbPwd);
+      console.log(hosp_accEmail, hosp_accPass)
+
+
+    });
+    
+  }

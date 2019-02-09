@@ -25,12 +25,18 @@ var app_firebase = {};
 
   }
 
+  function dbDelete(path, callBack){
+    if(!path) return;
+    app_firebase.database().ref(path).remove(callBack);
+
+  }
+
 
   app_firebase.databaseApi = {
     create: dbCreate,
     read: dbRead,
     //update: fnUpdate,
-    //delete: fnDelete
+    delete: dbDelete
   }
 
 
