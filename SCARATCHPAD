@@ -72,6 +72,17 @@ function fnAccCreate() {
       } 
 
 
+Patient Unique Number - Corresponds to patient roll
+Record Unique Number - new node records 
+Doctor ID - new node 
+Type of record - 
+Record made in inst or transfer from diff inst
+upload record - take pic / scan ..
+
+while save grab date and time and record created by what user ID
+
+
+
       
       console.log(dbEmail, dbPwd);
       console.log(hosp_accEmail, hosp_accPass)
@@ -80,3 +91,5 @@ function fnAccCreate() {
     });
     
   }
+
+  gWXoTO1LYbUxEV90Cj9PYC04dPi1

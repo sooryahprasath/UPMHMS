@@ -8,15 +8,26 @@ var mainApp = {};
       // User is signed in.
       uid = user.uid;
       uname = user.email;
+      console.log(uid);
+      if(uid == 'gWXoTO1LYbUxEV90Cj9PYC04dPi1')
+      {
+        document.getElementById('userGroupPat').style.display = "block";
+        document.getElementById('userGroupMed').style.display = "block";
+      }else{
+        document.getElementById('userGroupMed').style.display = "none";
+        document.getElementById('userGroupPat').style.display = "block";
+      }
       M.toast({
         html: uname + ' has logged in',
         classes: 'rounded'
       });
+
     } else {
       //redirect to login page
       uid = null;
       window.location.replace("login.html");
     }
+  
   });
 
   function logout() {
@@ -380,6 +391,22 @@ var mainApp = {};
 
   }
 
+  function fnRecord() {
+
+    var fileButton = document.getElementById('recordUpload');
+
+    fileButton.addEventListener('change', function(e){
+      console.log("pass in")
+      var file = e.target.files[0];
+      var storageRef = firebase.storage().ref('/medicalRecordFiles/' + file.name);
+      storageRef.put(file);
+      console.log("uploaded")
+
+
+    });
+
+  }
+
   mainApp.createInstitution = fnHCreate;
   mainApp.createPatient = fnPCreate;
   mainApp.deletePatient = fnHDelete;
@@ -389,5 +416,6 @@ var mainApp = {};
   mainApp.updateInstitution = fnUpdate;
   mainApp.createInstAcc = fnAccCreate;
   mainApp.deleteInstitution = fnDelete;
+  mainApp.recordMedicalData = fnRecord;
   mainApp.logout = logout;
 })()

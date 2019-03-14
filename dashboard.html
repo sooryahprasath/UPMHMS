@@ -39,9 +39,9 @@
             <a href="dashboard.html" class="brand-logo" style="margin-left:10px;font-size:18px;">Universal Patient Medical History Management System - UMHS</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-               <li><a onclick="hospitalToggle()">Medical Institutions</a></li>
-               <li><a onclick="patientToggle()">Patients</a></li>
-               <li style="display:;"><a class="waves-effect waves-light btn red lighten-1" href="file:///home/sooryah/Desktop/webapp/institution/login.html">CDIR</a></li>
+               <li id="userGroupMed"><a onclick="hospitalToggle()">Medical Institutions</a></li>
+               <li id="userGroupPat"><a onclick="patientToggle()">Patients</a></li>
+               <li style="display:;"><a class="waves-effect waves-light btn red lighten-1" style="display:none;" href="file:///home/sooryah/Desktop/webapp/institution/login.html">CDIR</a></li>
                <li><a class="waves-effect waves-light btn red lighten-1" onclick="mainApp.logout()">logout</a></li>
             </ul>
          </div>
@@ -49,13 +49,15 @@
             <ul class="tabs tabs-transparent">
                <li class="tab"><a onclick="createNewToggle();mainApp.showHospital();">Create New Medical Institution</a></li>
                <li class="tab"><a onclick="manageExistToggle();mainApp.viewInstitution();">Manage Existing Medical Institution</a></li>
-               <li class="tab"><a onclick="instAccToggle()">Create and Manage Institution Accounts</a></li>
+               <li style="display:none;" class="tab"><a onclick="instAccToggle()">Create and Manage Institution Accounts</a></li>
+               <li class="tab"><a onclick="doctorToggle()">Create and Manage Doctors'</a></li>
             </ul>
          </div>
          <div class="nav-content teal lighten-2" id="Patient" style="display:none">
             <ul class="tabs tabs-transparent">
-               <li class="tab"><a onclick="viewPatientToggle();mainApp.viewPatient();">View Patient Records</a></li>
-               <li class="tab"><a onclick="managePatientToggle()">Manage Patient Records</a></li>
+               <li class="tab"><a onclick="viewPatientToggle();mainApp.viewPatient();">View Exitsting Patients</a></li>
+               <li class="tab"><a onclick="managePatientToggle()">Create New Patient</a></li>
+               <li class="tab"><a onclick="manageMedicalToggle()">Manage Medical Records</a></li>
             </ul>
          </div>
       </nav>
@@ -250,6 +252,63 @@
             </div>
          </div>
       </div>
+
+      <!-- Doctor Manage -->
+      <div id="doctorManage" style="display:none; margin-top:10px; margin-left:30px; margin-right:30px">
+            <div id="form" class="col s8">
+               <div id="manageAccs" class="card-panel white">
+                  <label class="teal-text" for="inst_accnt">Create New Doctor Account</label>
+                  <div class="row">
+
+                        <div class="input-field col s6">
+                              <input id="inst_email" type="email" class="validate">
+                              <label for="inst_mail">Doctor Name</label>
+                           </div>
+
+                     <div class="input-field col s6">
+                           <input id="inst_email" type="email" class="validate">
+                           <label for="inst_mail">Doctor ID</label>
+                        </div>
+                     <div class="input-field col s6">
+                        <input id="inst_email" type="email" class="validate">
+                        <label for="inst_mail">Doctor Email</label>
+                     </div>
+                     <div class="input-field col s6">
+                        <input id="inst_emailrntr" type="email" class="validate">
+                        <label for="inst_mailrnt">Re Enter Email</label>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="input-field col s6">
+                        <input id="inst_pass" type="password" class="validate">
+                        <label for="inst_pwd">Password</label>
+                     </div>
+                     <div class="input-field col s6">
+                        <input id="inst_passrntr" type="password" class="validate">
+                        <label for="inst_pwdrntr">Re Enter Password</label>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="input-field col s3">
+                        <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createInstAcc();">Create Account
+                        <i class="material-icons right">send</i>
+                        </button>
+                     </div>
+                     <div class="input-field col s3">
+                        <button class="btn waves-effect waves-light yellow lighten-1" onclick="">Reset
+                        <i class="material-icons right">redo</i>
+                        </button>
+                     </div>
+                     <div class="input-field col s3">
+                        <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">Cancel
+                        <i class="material-icons right">cancel</i>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
       <!-- View Patients -->
       <div id="patientView" style="display:none; margin-top:10px;">
          <div id="viewPatient" class="card-panel white">
@@ -309,27 +368,6 @@
                      <label for="address_Pin">Pin Code</label>
                   </div>
                </div>
-               <label class="teal-text" for="inst_accnt">Patient Account Creation</label>
-               <div class="row">
-                  <div class="input-field col s6">
-                     <input id="inst_email" type="email" class="validate">
-                     <label for="inst_mail">Patient Email</label>
-                  </div>
-                  <div class="input-field col s6">
-                     <input id="inst_emailrntr" type="password" class="validate">
-                     <label for="inst_mailrnt">Re Enter Email</label>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="input-field col s6">
-                     <input id="inst_pass" type="password" class="validate">
-                     <label for="inst_pwd">Password</label>
-                  </div>
-                  <div class="input-field col s6">
-                     <input id="inst_passrntr" type="password" class="validate">
-                     <label for="inst_pwdrntr">Re Enter Password</label>
-                  </div>
-               </div>
                <div class="row">
                   <div class="input-field col s6">
                      <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createPatient()">Create New Patient
@@ -350,6 +388,62 @@
             </div>
          </div>
       </div>
+            <!-- Medical Records Patients -->
+            <div id="recordMedical" style="display:none; margin-top:10px;">
+               <div id="form" class="col s8">
+                  <div class="card-panel white">
+                     <label class="teal-text" for="pat_deatails">Add New Medical Record</label>
+                     <div class="row">
+                        <div class="input-field col s6">
+                           <input id="pat_name" type="text" class="validate">
+                           <label for="pat_nam">Patient ID</label>
+                           <!--make a drop down to list all patients ID as the user enters the digits HERE-->
+                        </div>
+                        <div class="input-field col s6">
+                           <input id="pat_age" type="text" class="validate">
+                           <label for="age_pat">Doctor ID</label>
+                           <!--make a drop down to list all patients ID as the user enters the digits HERE-->
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="input-field col s6">
+                           <input id="pat_mail" type="text" class="validate">
+                           <label for="mail">Type of Record</label>
+                           <!--make a drop down to list all patients ID as the user enters the digits HERE-->
+                        </div>
+                        <div class="input-field col s6">
+                           <input id="pat_phno" type="text" class="validate">
+                           <label for="phno">Record Origination</label>
+                           <!--Same inst or diffrent verify-->
+                        </div>
+                     </div>
+                     <label class="teal-text" for="address_BldgNo">Upload Files</label>
+                     <div class="row">
+                        <div class="input-field col s3">
+                           <input class="" type="file" id="recordUpload" value="upload">
+   
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="input-field col s6">
+                           <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.recordMedicalData()">Create New Patient
+                           <i class="material-icons right">send</i>
+                           </button>
+                        </div>
+                        <div class="input-field col s3">
+                           <button class="btn waves-effect waves-light yellow lighten-1" onclick="">Reset
+                           <i class="material-icons right">redo</i>
+                           </button>
+                        </div>
+                        <div class="input-field col s3">
+                           <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">Cancel
+                           <i class="material-icons right">cancel</i>
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
       </div>
       </div>
       </div>
