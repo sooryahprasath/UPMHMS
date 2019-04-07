@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function(){
 		.fadeOut();
 });
 
+
+
 function hospitalToggle() {
 document.getElementById('Patient').style.display = "none";
 document.getElementById('doctorManage').style.display = "none";
@@ -13,6 +15,7 @@ document.getElementById('manageAcc').style.display = "none";
 document.getElementById('dashCards').style.display = "none";
 document.getElementById('manageExists').style.display = "none";
 document.getElementById('createNew').style.display = "none";
+document.getElementById('recordView').style.display = "none";
 document.getElementById('patientView').style.display = "none";
 document.getElementById('patientManage').style.display = "none";
 document.getElementById('recordMedical').style.display = "none";
@@ -22,6 +25,7 @@ function patientToggle() {
 document.getElementById('Hospital').style.display = "none";
 document.getElementById('doctorManage').style.display = "none";
 document.getElementById('manageAcc').style.display = "none";
+document.getElementById('recordView').style.display = "none";
 document.getElementById('manageExists').style.display = "none";
 document.getElementById('dashCards').style.display = "none";
 document.getElementById('createNew').style.display = "none";
@@ -37,12 +41,14 @@ function createNewToggle() {
 document.getElementById('manageExists').style.display = "none";
 document.getElementById('manageAcc').style.display = "none";
 document.getElementById('doctorManage').style.display = "none";
+document.getElementById('recordView').style.display = "none";
 document.getElementById('createNew').style.display = "block";
 }
 
 function manageExistToggle() {
 document.getElementById('createNew').style.display = "none";
 document.getElementById('doctorManage').style.display = "none";
+document.getElementById('recordView').style.display = "none";
 document.getElementById('manageAcc').style.display = "none";
 document.getElementById('manageExists').style.display = "block";
 
@@ -52,16 +58,27 @@ function instAccToggle() {
 document.getElementById('createNew').style.display = "none";
 document.getElementById('doctorManage').style.display = "none";
 document.getElementById('manageExists').style.display = "none";
+document.getElementById('recordView').style.display = "none";
 document.getElementById('manageAcc').style.display = "block";
 }
 
 function doctorToggle() {
 document.getElementById('createNew').style.display = "none";
 document.getElementById('manageExists').style.display = "none";
-document.getElementById('manageExists').style.display = "none";
 document.getElementById('manageAcc').style.display = "none";
+document.getElementById('recordView').style.display = "none";
 document.getElementById('doctorManage').style.display = "block";
 	
+}
+
+function uploadlogToggle(){
+document.getElementById('createNew').style.display = "none";
+document.getElementById('manageExists').style.display = "none";
+document.getElementById('manageAcc').style.display = "none";
+document.getElementById('doctorManage').style.display = "none";
+document.getElementById('recordView').style.display = "block";
+
+
 }
 function viewPatientToggle() {
 document.getElementById('patientManage').style.display = "none";

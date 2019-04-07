@@ -35,6 +35,20 @@ function fnAccCreate() {
     });
 
 
+    var data = {
+      pat_name: name.value,
+      pat_age: age.value,
+      pat_email: email.value,
+      pat_phone: phone.value,
+      pat_bldgno: bldgno.value,
+      pat_street: street.value,
+      pat_locality: locality.value,
+      pat_city: city.value,
+      pat_pincode: pincode.value
+    }
+    app_firebase.databaseApi.create(path, data, messageHandler);
+    console.log("Pushed to conn");
+
 
 
   function accLogin() {
@@ -93,3 +107,54 @@ while save grab date and time and record created by what user ID
   }
 
   gWXoTO1LYbUxEV90Cj9PYC04dPi1
+
+
+
+      if (accEmail.value == '' || accEmailre.value == '' || accPass.value == '' || accPassre.value == '') {
+      M.toast({
+        html: 'Email or password feilds cannot be empty',
+        classes: 'rounded'
+      });
+
+    } else {
+
+      app_firebase.databaseApi.create(pathAcc, dataAcc, messageHandlerAcc);
+    }
+
+
+                            <div class="col s3">
+                           <div class="card teal lighten-1">
+                              <div style="text-align: center;" class="card-content white-text">
+                                 <span class="card-title">Anindya Mahapatra R17CS836</span>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col s3">
+                           <div class="card teal lighten-1">
+                              <div style="text-align: center;" class="card-content white-text">
+                                 <span class="card-title">Kamesh S R17CS824</span>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col s3">
+                           <div class="card teal lighten-1">
+                              <div style="text-align: center;" class="card-content white-text">
+                                 <span class="card-title">Surjeet Kumar R17CS811</span>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col s3">
+                           <div class="card teal lighten-1">
+                              <div style="text-align: center;" class="card-content white-text">
+                                 <span class="card-title">Sooryah P R17CS823</span>
+                              </div>
+
+
+
+                        <div class="col s3">
+                           <div style="text-align: center;" class="card teal lighten-1 card-content white-text">
+                              
+                                 <span class="card-title">Anindya Mahapatra R17CS836</span>
+                      
+                           </div>
+                        </div>

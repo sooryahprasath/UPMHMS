@@ -3,12 +3,14 @@ var mainApp = {};
 
   var firebase = app_firebase;
   var uid = null;
+  fnStatistics();
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
       uid = user.uid;
       uname = user.email;
       console.log(uid);
+
       if(uid == 'gWXoTO1LYbUxEV90Cj9PYC04dPi1')
       {
         document.getElementById('userGroupPat').style.display = "block";
@@ -149,6 +151,8 @@ var mainApp = {};
   }
 
   function fnPCreate() {
+    var randID = Math.floor(Math.random() * 100) + 1;
+    console.log(randID);
     var name = document.getElementById("pat_name");
     var age = document.getElementById("pat_age");
     var email = document.getElementById("pat_mail");
@@ -161,6 +165,7 @@ var mainApp = {};
 
     var path = 'patients/';
     var data = {
+      pat_id: randID,
       pat_name: name.value,
       pat_age: age.value,
       pat_email: email.value,
@@ -296,6 +301,7 @@ var mainApp = {};
         var html = "<table class='centered' border='1|1'>";
         html += "<thead>";
         html += "<tr>";
+        html += "<th>Patient ID</th>";
         html += "<th>Patient Name</th>";
         html += "<th>Age</th>";
         html += "<th>Phone</th>";
@@ -308,6 +314,7 @@ var mainApp = {};
 
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
+          var pid = pat_info[k].pat_id;
           var name = pat_info[k].pat_name;
           var age = pat_info[k].pat_age;
           var email = pat_info[k].pat_email;
@@ -316,15 +323,16 @@ var mainApp = {};
           var city = pat_info[k].pat_city;
 
           html += "<tr>";
+          html += "<td>PT" + pid + "</td>";
           html += "<td>" + name + "</td>";
           html += "<td>" + age + "</td>";
           html += "<td>" + phone + "</td>";
           html += "<td>" + email + "</td>";
           html += "<td>" + locality + "</td>";
           html += "<td>" + city + "</td>";
-          html += "<td>" + keys + "</td>";
+          html += "<td>" +  + "</td>";
           html += "</tr>";
-          console.log(name, age, email, phone, locality, city);
+          console.log(pid, name, age, email, phone, locality, city);
           console.log(keys);
         }
         html += "</table>";
@@ -392,27 +400,185 @@ var mainApp = {};
   }
 
   function fnRecord() {
-
     var fileButton = document.getElementById('recordUpload');
+    var patID = document.getElementById("pat_id").value;
+    var docID = document.getElementById("doc_id").value;
+    var timestamp = new Date().toLocaleString();
+    var file = fileButton.files[0];
+    console.log(file);
+    
+    if (patID == '' || docID == '' || file == 'undefined') {
+      M.toast({
+        html: 'Feilds cannot be empty',
+        classes: 'rounded'
+      });
 
-    fileButton.addEventListener('change', function(e){
-      console.log("pass in")
-      var file = e.target.files[0];
-      var storageRef = firebase.storage().ref('/medicalRecordFiles/' + file.name);
-      storageRef.put(file);
-      console.log("uploaded")
+    }else{
 
+    console.log(patID);
+    console.log(timestamp);
+    console.log("pass in");
+    
+    var storageRef = firebase.storage().ref('/'+uid+'/Patient_'+patID+'/Doctor'+docID+'_'+file.name);
+    var hduid = uid,
+        vis = hduid.slice(-4),
+        countNum = '';
 
+        for(var i = (hduid.length)-4; i>0; i--){
+            countNum += '*';
+        }
+    console.log(countNum+vis);
+    var location = '/'+countNum+vis+'/Patient_'+patID+'/';
+    console.log(location);
+    storageRef.put(file);
+    var path = 'uploadLog/';
+    var data = {
+        time: timestamp,
+        patientID: patID,
+        doctorID: docID,
+        fileName: file.name,
+        fileLoc: location
+    }
+    app_firebase.databaseApi.create(path, data, messageHandler);
+    console.log("Pushed to conn");
+    console.log("uploaded")
+    M.toast({
+      html: file.name + ' has been Uploaded',
+      classes: 'rounded'
     });
-
   }
+}
+
+function fnRecRead() {
+  var path = 'uploadLog/';
+  app_firebase.databaseApi.read(path, sucessFn, messageHandler)
+
+  function sucessFn(snapShot) {
+    if (!!snapShot && !!snapShot.val()) {
+      //console.log(snapShot.val());
+      var log_info = snapShot.val();
+      var keys = Object.keys(log_info);
+      var count = Object.keys(log_info).length;
+      console.log(count);
+      console.log(count);
+      var html = "<table class='centered' border='1|1'>";
+      html += "<thead>";
+      html += "<tr>";
+      html += "<th>Time Stamp</th>";
+      html += "<th>Patient ID</th>";
+      html += "<th>Doctor ID</th>";
+      html += "<th>File Name</th>";
+      html += "<th>File Location</th>";
+      html += "</tr>";
+      html += "</thead>";
+
+      for (var i = 0; i < keys.length; i++) {
+        var k = keys[i];
+        var time = log_info[k].time;
+        var pid = log_info[k].patientID;
+        var did = log_info[k].doctorID;
+        var fname = log_info[k].fileName;
+        var floc = log_info[k].fileLoc;
+
+        html += "<tr>";
+        html += "<td>" + time + "</td>";
+        html += "<td>" + pid + "</td>";
+        html += "<td>" + did + "</td>";
+        html += "<td>" + fname + "</td>";
+        html += "<td>" + floc + "</td>";
+        html += "</tr>";
+      }
+      html += "</table>";
+      document.getElementById("viewRecord").innerHTML = html;
+      M.toast({
+        html: 'Upload Log Loaded',
+        classes: 'rounded'
+      });
+
+    } else {
+      console.log("No data la");
+      M.toast({
+        html: 'Upload Log not available',
+        classes: 'rounded'
+      });
+    }
+  }
+}
+
+function fnStatistics()
+{
+  console.log("in");
+  var path1 = 'patients/';
+  app_firebase.databaseApi.read(path1, sucessFn1, messageHandler)
+
+  function sucessFn1(snapShot) {
+
+    if (!!snapShot && !!snapShot.val()) {
+      var log_info = snapShot.val();
+      var count = Object.keys(log_info).length;
+      console.log(count);
+      var html = "<h4>" + count + "</h4>";
+      document.getElementById("countPatients").innerHTML = html;
+
+    }else{
+      M.toast({
+        html: 'Failed to Load Patients Statistics',
+        classes: 'rounded'
+      });
+
+    }
+  }
+    var path2 = 'institutions/';
+    app_firebase.databaseApi.read(path2, sucessFn2, messageHandler)
+  
+    function sucessFn2(snapShot) {
+  
+      if (!!snapShot && !!snapShot.val()) {
+        var log_info = snapShot.val();
+        var count = Object.keys(log_info).length;
+        console.log(count);
+        var html = "<h4>" + count + "</h4>";
+        document.getElementById("countHospitals").innerHTML = html;
+  
+      }else{
+        M.toast({
+          html: 'Failed to Load Hospital Statistics',
+          classes: 'rounded'
+        });
+  
+      }
+    }
+
+      var path3 = 'uploadLog/';
+      app_firebase.databaseApi.read(path3, sucessFn3, messageHandler)
+    
+      function sucessFn3(snapShot) {
+    
+        if (!!snapShot && !!snapShot.val()) {
+          var log_info = snapShot.val();
+          var count = Object.keys(log_info).length;
+          console.log(count);
+          var html = "<h4>" + count + "</h4>";
+          document.getElementById("countRecords").innerHTML = html;
+    
+        }else{
+          M.toast({
+            html: 'Failed to Load Records Statistics',
+            classes: 'rounded'
+          });
+    
+        }
+      }
+    }
 
   mainApp.createInstitution = fnHCreate;
   mainApp.createPatient = fnPCreate;
   mainApp.deletePatient = fnHDelete;
   mainApp.viewInstitution = fnHRead;
+  mainApp.viewUploadRecords = fnRecRead;
   mainApp.viewPatient = fnPRead;
   mainApp.showHospital = fnHShow;
+  mainApp.getStats = fnStatistics;
   mainApp.updateInstitution = fnUpdate;
   mainApp.createInstAcc = fnAccCreate;
   mainApp.deleteInstitution = fnDelete;

@@ -9,9 +9,10 @@
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
       <link type="text/css" rel="stylesheet" href="css/custom.css"  media="screen,projection"/>
       <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
       <meta name="description" content="">
       <meta name="author" content="">
+      <script></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
       <title>Universal Patient Medical History Management System - UMHS</title>
@@ -36,21 +37,22 @@
       <!-- Navigation -->
       <nav class="nav-extended teal lighten-1">
          <div class="nav-wrapper">
-            <a href="dashboard.html" class="brand-logo" style="margin-left:10px;font-size:18px;">Universal Patient Medical History Management System - UMHS</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <a href="dashboard.html" onclick="mainApp.getStats();" class="brand-logo" style="margin-left:10px;font-size:18px;">Universal Patient Medical History Management System - UMHS</a>
+            <a href="#" data-target="mobile-demo" data-activates="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i>
+            </a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                <li id="userGroupMed"><a onclick="hospitalToggle()">Medical Institutions</a></li>
                <li id="userGroupPat"><a onclick="patientToggle()">Patients</a></li>
-               <li style="display:;"><a class="waves-effect waves-light btn red lighten-1" style="display:none;" href="file:///home/sooryah/Desktop/webapp/institution/login.html">CDIR</a></li>
                <li><a class="waves-effect waves-light btn red lighten-1" onclick="mainApp.logout()">logout</a></li>
             </ul>
          </div>
          <div class="nav-content teal lighten-2" id="Hospital" style="display:none">
             <ul class="tabs tabs-transparent">
-               <li class="tab"><a onclick="createNewToggle();mainApp.showHospital();">Create New Medical Institution</a></li>
+               <li style="display: ;" class="tab"><a onclick="createNewToggle();mainApp.showHospital();">Create New Medical Institution</a></li>
                <li class="tab"><a onclick="manageExistToggle();mainApp.viewInstitution();">Manage Existing Medical Institution</a></li>
                <li style="display:none;" class="tab"><a onclick="instAccToggle()">Create and Manage Institution Accounts</a></li>
                <li class="tab"><a onclick="doctorToggle()">Create and Manage Doctors'</a></li>
+               <li class="tab"><a onclick="uploadlogToggle();mainApp.viewUploadRecords()">View Upload Logs'</a></li>
             </ul>
          </div>
          <div class="nav-content teal lighten-2" id="Patient" style="display:none">
@@ -66,134 +68,162 @@
          <div class="row">
             <!-- Cards --> 
             <div id="dashCards">
-               <div class="col s3">
+               <div class="col s4">
                   <div class="card teal lighten-1">
-                     <div class="card-content white-text">
-                        <span class="card-title">Card Title</span>
-                        <p>I am a very simple card. I am good at containing small bits of information.
-                        </p>
+                     <div style="text-align: center;" class="card-content white-text">
+                        <span class="card-title">Number of Patients</span>
+                        <div class="" id="countPatients">
+                        </div>
                      </div>
                   </div>
                </div>
-               <div class="col s3">
+               <div class="col s4">
                   <div class="card teal lighten-1">
-                     <div class="card-content white-text">
-                        <span class="card-title">Card Title</span>
-                        <p>I am a very simple card. I am good at containing small bits of information.
-                        </p>
+                     <div style="text-align: center;" class="card-content white-text">
+                        <span class="card-title">Number of Hospitals</span>
+                        <div id="countHospitals">
+                        </div>
                      </div>
                   </div>
                </div>
-               <div class="col s3">
+               <div class="col s4">
                   <div class="card teal lighten-1">
-                     <div class="card-content white-text">
-                        <span class="card-title">Card Title</span>
-                        <p>I am a very simple card. I am good at containing small bits of information.
-                        </p>
-                     </div>
-                  </div>
-               </div>
-               <div class="col s3">
-                  <div class="card teal lighten-1">
-                     <div class="card-content white-text">
-                        <span class="card-title">Card Title</span>
-                        <p>I am a very simple card. I am good at containing small bits of information.
-                        </p>
+                     <div style="text-align: center;" class="card-content white-text">
+                        <span class="card-title">Number of Records</span>
+                        <div id="countRecords">
+                        </div>
                      </div>
                   </div>
                </div>
                <div class="col s12">
                   <div class="card teal lighten-1">
                      <div class="card-content white-text">
-                        <span class="card-title">Card Title</span>
-                        <p>I am a very simple card. I am good at containing small bits of information.
-                        </p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!-- Create new Medical Institution -->
-            <div id="createNew" style="display:none; margin-top:10px;">
-               <div id="form" class="col s8">
-                  <div class="card-panel white">
-                     <label class="teal-text" for="inst_deatails">Institution Contact Details</label>
-                     <div class="row">
-                        <div class="input-field col s6">
-                           <input id="inst_name" type="text" class="validate">
-                           <label for="inst_nam">Institution Name</label>
+                        <span class="card-title">Project crafted by, Group - H3</span>
+                        <div class="col s3">
+                           <div style="text-align: center;" class="card teal lighten-1 card-content white-text">
+                              <span class="card-title">Anindya Mahapatra <br> R17CS836</span>
+                           </div>
                         </div>
-                        <div class="input-field col s6">
-                           <input id="head_name" type="text" class="validate">
-                           <label for="head_name">Head of Institution Name</label>
+                        <div class="col s3">
+                           <div style="text-align: center;" class="card teal lighten-1 card-content white-text">
+                              <span class="card-title">Kamesh S <br> R17CS824</span>
+                           </div>
                         </div>
-                     </div>
-                     <div class="row">
-                        <div class="input-field col s6">
-                           <input id="contact_mail" type="text" class="validate">
-                           <label for="mail">Contact Email</label>
+                        <div class="col s3">
+                           <div style="text-align: center;" class="card teal lighten-1 card-content white-text">
+                              <span class="card-title">Surjeet Kumar <br> R17CS811</span>
+                           </div>
                         </div>
-                        <div class="input-field col s6">
-                           <input id="contact_phno" type="text" class="validate">
-                           <label for="phno">Contact Phone Number</label>
-                        </div>
-                     </div>
-                     <label class="teal-text" for="address_BldgNo">Institution Address</label>
-                     <div class="row">
-                        <div class="input-field col s3">
-                           <input id="inst_addressBldgNo" type="text" class="validate">
-                           <label for="address_BldgNo">Building Number</label>
-                        </div>
-                        <div class="input-field col s9">
-                           <input id="inst_addressStrtNo" type="text" class="validate">
-                           <label for="address_StrtNm">Street Name</label>
-                        </div>
-                        <div class="input-field col s4">
-                           <input id="inst_addressLclty" type="text" class="validate">
-                           <label for="address_Lclty">Locality</label>
-                        </div>
-                        <div class="input-field col s5">
-                           <input id="inst_addressCity" type="text" class="validate">
-                           <label for="address_City">City</label>
-                        </div>
-                        <div class="input-field col s3">
-                           <input id="inst_addressPnCd" type="text" class="validate">
-                           <label for="address_Pin">Pin Code</label>
-                        </div>
-                     </div>
-                     <div class="row">
-                        <div class="input-field col s6">
-                           <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createInstitution();mainApp.showHospital();">Create New Institution
-                           <i class="material-icons right">send</i>
-                           </button>
-                        </div>
-                        <div class="input-field col s3">
-                           <button class="btn waves-effect waves-light yellow lighten-1" type="reset" onclick="formReset();">Reset
-                           <i class="material-icons right">redo</i>
-                           </button>
-                        </div>
-                        <div class="input-field col s3">
-                           <button class="btn waves-effect waves-light red lighten-1" onclick="formCancle();" name="action">Cancel
-                           <i class="material-icons right">cancel</i>
-                           </button>
+                        <div class="col s3">
+                           <div style="text-align: center;" class="card teal lighten-1 card-content white-text">
+                              <span class="card-title">Sooryah P <br> R17CS823</span>
+                           </div>
                         </div>
                      </div>
                   </div>
                </div>
-               <!-- view Institution -->
-               <div class="col s4">
-                  <div class="card-panel white">
-                     <label class="teal-text" for="pat_deatails">Institutions Recently Added</label>
-                     <div id="viewHospitals">
-                        <!-- Loader -->
-                        <div class="progress">
-                           <div class="indeterminate"></div>
-                        </div>
-                        <h6 style="text-align:center">Nothing Found Yet</h6>
-                     </div>
+            <div class="col s12">
+               <div class="card teal lighten-1">
+                  <div class="card-content white-text">
+                     <span class="card-title">Information about the Project</span>
+                     <h6>The Universal Patient Medical History Management system is a unified interface
+                        which consolidates all patient medical history into one place via both a web
+                        application as well as mobile application(limited privilege on patient end) to prevent
+                        redundant paperwork, and allows patients to visit multiple doctors and hospitals
+                        without having to go through similar tests. It is a Java based management system
+                        which can be managed on a private server(by organisations) or by the government as
+                        per need. The system conserves the authentication privilege and prevents incorrect or
+                        unauthorised update or removal of data without needing to refer to multiple databases
+                        or cross hospital databases.
+                     </h6>
                   </div>
                </div>
             </div>
          </div>
+      </div>
+      </div>
+      <!-- Create new Medical Institution -->
+      <div id="createNew" style="display:none; margin-top:10px;">
+         <div id="form" class="col s8">
+            <div class="card-panel white">
+               <label class="teal-text" for="inst_deatails">Institution Contact Details</label>
+               <div class="row">
+                  <div class="input-field col s6">
+                     <input id="inst_name" type="text" class="validate">
+                     <label for="inst_nam">Institution Name</label>
+                  </div>
+                  <div class="input-field col s6">
+                     <input id="head_name" type="text" class="validate">
+                     <label for="head_name">Head of Institution Name</label>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="input-field col s6">
+                     <input id="contact_mail" type="text" class="validate">
+                     <label for="mail">Contact Email</label>
+                  </div>
+                  <div class="input-field col s6">
+                     <input id="contact_phno" type="text" class="validate">
+                     <label for="phno">Contact Phone Number</label>
+                  </div>
+               </div>
+               <label class="teal-text" for="address_BldgNo">Institution Address</label>
+               <div class="row">
+                  <div class="input-field col s3">
+                     <input id="inst_addressBldgNo" type="text" class="validate">
+                     <label for="address_BldgNo">Building Number</label>
+                  </div>
+                  <div class="input-field col s9">
+                     <input id="inst_addressStrtNo" type="text" class="validate">
+                     <label for="address_StrtNm">Street Name</label>
+                  </div>
+                  <div class="input-field col s4">
+                     <input id="inst_addressLclty" type="text" class="validate">
+                     <label for="address_Lclty">Locality</label>
+                  </div>
+                  <div class="input-field col s5">
+                     <input id="inst_addressCity" type="text" class="validate">
+                     <label for="address_City">City</label>
+                  </div>
+                  <div class="input-field col s3">
+                     <input id="inst_addressPnCd" type="text" class="validate">
+                     <label for="address_Pin">Pin Code</label>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="input-field col s6">
+                     <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createInstitution();mainApp.showHospital();">Create New Institution
+                     <i class="material-icons right">send</i>
+                     </button>
+                  </div>
+                  <div class="input-field col s3">
+                     <button class="btn waves-effect waves-light yellow lighten-1" type="reset" onclick="formReset();">Reset
+                     <i class="material-icons right">redo</i>
+                     </button>
+                  </div>
+                  <div class="input-field col s3">
+                     <button class="btn waves-effect waves-light red lighten-1" onclick="formCancle();" name="action">Cancel
+                     <i class="material-icons right">cancel</i>
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- view Institution -->
+         <div class="col s4">
+            <div class="card-panel white">
+               <label class="teal-text" for="pat_deatails">Institutions Recently Added</label>
+               <div id="viewHospitals">
+                  <!-- Loader -->
+                  <div class="progress">
+                     <div class="indeterminate"></div>
+                  </div>
+                  <h6 style="text-align:center">Nothing Found Yet</h6>
+               </div>
+            </div>
+         </div>
+      </div>
+      </div>
       </div>
       <!-- Manage Existing Medical Institution -->
       <div id="manageExists" style="display:none; margin-top:10px; margin-left:30px; margin-right:30px">
@@ -252,63 +282,59 @@
             </div>
          </div>
       </div>
-
       <!-- Doctor Manage -->
       <div id="doctorManage" style="display:none; margin-top:10px; margin-left:30px; margin-right:30px">
-            <div id="form" class="col s8">
-               <div id="manageAccs" class="card-panel white">
-                  <label class="teal-text" for="inst_accnt">Create New Doctor Account</label>
-                  <div class="row">
-
-                        <div class="input-field col s6">
-                              <input id="inst_email" type="email" class="validate">
-                              <label for="inst_mail">Doctor Name</label>
-                           </div>
-
-                     <div class="input-field col s6">
-                           <input id="inst_email" type="email" class="validate">
-                           <label for="inst_mail">Doctor ID</label>
-                        </div>
-                     <div class="input-field col s6">
-                        <input id="inst_email" type="email" class="validate">
-                        <label for="inst_mail">Doctor Email</label>
-                     </div>
-                     <div class="input-field col s6">
-                        <input id="inst_emailrntr" type="email" class="validate">
-                        <label for="inst_mailrnt">Re Enter Email</label>
-                     </div>
+         <div id="form" class="col s8">
+            <div id="manageAccs" class="card-panel white">
+               <label class="teal-text" for="inst_accnt">Create New Doctor Account</label>
+               <div class="row">
+                  <div class="input-field col s6">
+                     <input id="inst_email" type="email" class="validate">
+                     <label for="inst_mail">Doctor Name</label>
                   </div>
-                  <div class="row">
-                     <div class="input-field col s6">
-                        <input id="inst_pass" type="password" class="validate">
-                        <label for="inst_pwd">Password</label>
-                     </div>
-                     <div class="input-field col s6">
-                        <input id="inst_passrntr" type="password" class="validate">
-                        <label for="inst_pwdrntr">Re Enter Password</label>
-                     </div>
+                  <div class="input-field col s6">
+                     <input id="inst_email" type="email" class="validate">
+                     <label for="inst_mail">Doctor ID</label>
                   </div>
-                  <div class="row">
-                     <div class="input-field col s3">
-                        <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createInstAcc();">Create Account
-                        <i class="material-icons right">send</i>
-                        </button>
-                     </div>
-                     <div class="input-field col s3">
-                        <button class="btn waves-effect waves-light yellow lighten-1" onclick="">Reset
-                        <i class="material-icons right">redo</i>
-                        </button>
-                     </div>
-                     <div class="input-field col s3">
-                        <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">Cancel
-                        <i class="material-icons right">cancel</i>
-                        </button>
-                     </div>
+                  <div class="input-field col s6">
+                     <input id="inst_email" type="email" class="validate">
+                     <label for="inst_mail">Doctor Email</label>
+                  </div>
+                  <div class="input-field col s6">
+                     <input id="inst_emailrntr" type="email" class="validate">
+                     <label for="inst_mailrnt">Re Enter Email</label>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="input-field col s6">
+                     <input id="inst_pass" type="password" class="validate">
+                     <label for="inst_pwd">Password</label>
+                  </div>
+                  <div class="input-field col s6">
+                     <input id="inst_passrntr" type="password" class="validate">
+                     <label for="inst_pwdrntr">Re Enter Password</label>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="input-field col s3">
+                     <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createInstAcc();">Create Account
+                     <i class="material-icons right">send</i>
+                     </button>
+                  </div>
+                  <div class="input-field col s3">
+                     <button class="btn waves-effect waves-light yellow lighten-1" onclick="">Reset
+                     <i class="material-icons right">redo</i>
+                     </button>
+                  </div>
+                  <div class="input-field col s3">
+                     <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">Cancel
+                     <i class="material-icons right">cancel</i>
+                     </button>
                   </div>
                </div>
             </div>
          </div>
-
+      </div>
       <!-- View Patients -->
       <div id="patientView" style="display:none; margin-top:10px;">
          <div id="viewPatient" class="card-panel white">
@@ -370,7 +396,7 @@
                </div>
                <div class="row">
                   <div class="input-field col s6">
-                     <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createPatient()">Create New Patient
+                     <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.createPatient();">Create New Patient
                      <i class="material-icons right">send</i>
                      </button>
                   </div>
@@ -388,62 +414,80 @@
             </div>
          </div>
       </div>
-            <!-- Medical Records Patients -->
-            <div id="recordMedical" style="display:none; margin-top:10px;">
-               <div id="form" class="col s8">
-                  <div class="card-panel white">
-                     <label class="teal-text" for="pat_deatails">Add New Medical Record</label>
-                     <div class="row">
-                        <div class="input-field col s6">
-                           <input id="pat_name" type="text" class="validate">
-                           <label for="pat_nam">Patient ID</label>
-                           <!--make a drop down to list all patients ID as the user enters the digits HERE-->
-                        </div>
-                        <div class="input-field col s6">
-                           <input id="pat_age" type="text" class="validate">
-                           <label for="age_pat">Doctor ID</label>
-                           <!--make a drop down to list all patients ID as the user enters the digits HERE-->
-                        </div>
-                     </div>
-                     <div class="row">
-                        <div class="input-field col s6">
-                           <input id="pat_mail" type="text" class="validate">
-                           <label for="mail">Type of Record</label>
-                           <!--make a drop down to list all patients ID as the user enters the digits HERE-->
-                        </div>
-                        <div class="input-field col s6">
-                           <input id="pat_phno" type="text" class="validate">
-                           <label for="phno">Record Origination</label>
-                           <!--Same inst or diffrent verify-->
-                        </div>
-                     </div>
-                     <label class="teal-text" for="address_BldgNo">Upload Files</label>
-                     <div class="row">
-                        <div class="input-field col s3">
-                           <input class="" type="file" id="recordUpload" value="upload">
-   
-                        </div>
-                     </div>
-                     <div class="row">
-                        <div class="input-field col s6">
-                           <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.recordMedicalData()">Create New Patient
-                           <i class="material-icons right">send</i>
-                           </button>
-                        </div>
-                        <div class="input-field col s3">
-                           <button class="btn waves-effect waves-light yellow lighten-1" onclick="">Reset
-                           <i class="material-icons right">redo</i>
-                           </button>
-                        </div>
-                        <div class="input-field col s3">
-                           <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">Cancel
-                           <i class="material-icons right">cancel</i>
-                           </button>
-                        </div>
-                     </div>
+      <!-- Medical Records Patients -->
+      <div id="recordMedical" style="display:none; margin-top:10px;">
+         <div id="form" class="col s8">
+            <div class="card-panel white">
+               <label class="teal-text" for="pat_deatails">Add New Medical Record</label>
+               <div class="row">
+                  <div class="input-field col s6">
+                     <input id="pat_id" type="text" class="validate">
+                     <label for="pat_nam">Patient ID</label>
+                     <!--make a drop down to list all patients ID as the user enters the digits HERE-->
+                  </div>
+                  <div class="input-field col s6">
+                     <input id="doc_id" type="text" class="validate">
+                     <label for="age_pat">Doctor ID</label>
+                     <!--make a drop down to list all patients ID as the user enters the digits HERE-->
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="input-field col s6">
+                     <input id="pat_recType" type="text" class="validate">
+                     <label for="mail">Type of Record</label>
+                     <!--make a drop down to list all patients ID as the user enters the digits HERE-->
+                  </div>
+                  <div class="input-field col s6">
+                     <input id="pat_phno" type="text" class="validate">
+                     <label for="phno">Record Origination</label>
+                     <!--Same inst or diffrent verify-->
+                  </div>
+               </div>
+               <label class="teal-text" for="address_BldgNo">Upload Files</label>
+               <div class="row">
+                  <div class="input-field col s6">
+                     <label style="color:white;" class="btn waves-effect waves-light teal lighten-1" for="recordUpload">
+                     <input id="recordUpload" type="file" style="display:none"
+                        onchange="$('#upload-file-info').html(this.files[0].name)">
+                     Click to Select File
+                     </label>
+                     <br/>
+                     <br/>
+                     <br/>
+                     <span class='label label-info' id="upload-file-info"></span>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="input-field col s6">
+                     <button class="btn waves-effect waves-light teal lighten-1" onclick="mainApp.recordMedicalData()">Upload and Save Record
+                     <i class="material-icons right">send</i>
+                     </button>
+                  </div>
+                  <div class="input-field col s3">
+                     <button class="btn waves-effect waves-light yellow lighten-1" onclick="">Reset
+                     <i class="material-icons right">redo</i>
+                     </button>
+                  </div>
+                  <div class="input-field col s3">
+                     <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">Cancel
+                     <i class="material-icons right">cancel</i>
+                     </button>
                   </div>
                </div>
             </div>
+         </div>
+      </div>
+      <!-- View Log -->
+      <div id="recordView" style="display:none; margin-top:10px;">
+         <div id="viewRecord" class="card-panel white">
+            <label style="display: none;" class="teal-text" for="rec_details">Upload Log</label>
+            <div class="progress">
+               <div class="indeterminate"></div>
+            </div>
+            <h6 style="text-align:center">Nothing Found Yet</h6>
+            <!---Auto Generated -->
+         </div>
+      </div>
       </div>
       </div>
       </div>
